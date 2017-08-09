@@ -62,10 +62,124 @@ router.get('/checkLogin', (req, res, next) => {
   } else {
     res.json({
       status: '1',
-      msg: '未登录',
+      msg: 'not logged in',
       result: ''
     })
   }
 })
+
+router.get('/cartList', (req, res, next) => {
+  const userId = req.cookies.userId;
+  User.findOne({userId}, (err, doc) => {
+    if (err) {
+      res.json({
+        status: '1',
+        msg: err.message,
+        result: ''
+      })
+    } else {
+      if (doc) {
+        res.json({
+          status: '0',
+          msg: '',
+          result: doc.cartList
+        })
+      }
+    }
+  });
+})
+
+router.post('/cartDel', (req, res, next) => {
+  const userId = req.cookies.userId;
+  const productId = req.body.productId;
+  User.update({userId}, {
+    $pull: {
+      'cartList': {
+        'productId': productId
+      }
+    }
+  }, (err, doc) => {
+    if (err) {
+      res.json({
+      status: '1',
+      msg: err.message,
+      result: ''
+    })
+    } else {
+      if (doc) {
+        res.json({
+          status: '0',
+          msg: '',
+          result: 'suc'
+        })
+      }
+    }
+  })
+})
+
+router.post('/cartEdit', (req, res, next) => {
+  const userId = req.cookies.userId;
+  const productId = req.body.productId;
+  const productNum = req.body.productNum;
+  const checked = req.body.checked;
+  User.update({userId, "cartList.productId": productId}, {
+    "cartList.$.productNum": productNum,
+    "cartList.$.checked": checked,
+  }, (err, doc) => {
+    if (err) {
+      res.json({
+      status: '1',
+      msg: err.message,
+      result: ''
+    })
+    } else {
+      if (doc) {
+        res.json({
+          status: '0',
+          msg: '',
+          result: 'suc'
+        })
+      }
+    }
+  })
+})
+
+
+router.post('/editCheckAll', (req, res, next) => {
+  const userId = req.cookies.userId;
+  const checkAll = req.body.checkAll;
+ 
+  User.findOne({userId}, (err, user) => {
+    if (err) {
+      res.json({
+        status: '1',
+        msg: err.message,
+        result: ''
+      })
+    } else {
+      if (user) {
+        user.cartList.forEach(item => {
+          item.checked = checkAll;
+        });
+        user.save((err1, doc) => {
+          if (err1) {
+            res.json({
+              status: '1',
+              msg: err.message,
+              result: ''
+            }) 
+          } else {
+            res.json({
+              status: '0',
+              msg: '',
+              result: 'suc'
+            })
+          }
+        })
+      }
+    }
+  })
+})
+
 
 module.exports = router;
