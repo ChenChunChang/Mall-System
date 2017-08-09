@@ -41,7 +41,7 @@
                     <div class="name">{{ item.productName }}</div>
                     <div class="price">{{ item.salePrice | currency}}</div>
                     <div class="btn-area">
-                      <a href="javascript:;" class="btn btn--m" @click="addCart(item.productId)">加入购物车</a>
+                      <a href="javascript:;" class="btn btn--m" @click="addCart(item.productId)">Add to cart</a>
                     </div>
                   </div>
                 </li>
@@ -59,17 +59,17 @@
     <div class="md-overlay" v-show="overLayFlag" @click="closePop"></div>
 
     <modal :mdShow="mdShow" @close="closeModal">
-      <p slot="msg">请先登录，否则无法加入到购物车中！</p>
+      <p slot="msg">Please log in first!</p>
       <div slot="btn-group">
-        <a class="btn btn-m" href="javascript:;" @click="mdShow = false">关闭</a>
+        <a class="btn btn-m" href="javascript:;" @click="mdShow = false">close</a>
       </div>
     </modal>
 
     <modal :mdShow="mdShowCart" @close="closeModal">
-      <p slot="msg">加入购物车成功！</p>
+      <p slot="msg">Successfully added to cart !</p>
       <div slot="btn-group">
-        <a class="btn btn-m" href="javascript:;" @click="mdShowCart = false">继续购物</a>
-        <router-link to="/cart" class="btn btn-m">查看购物车</router-link>
+        <a class="btn btn-m" href="javascript:;" @click="mdShowCart = false">Go on shopping</a>
+        <router-link to="/cart" class="btn btn-m">Go to my cart</router-link>
       </div>
     </modal>
 
