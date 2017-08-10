@@ -1,8 +1,11 @@
 # Mall-System
 
 > A Vue.js SPA based on vue-cli
-+ Plugins: vue-router + axios + vuex
-+ Backend: Node.js + express + MongoDB
++ Plugins: 
+  - vue-router + axios + vuex 
+  - vue-lazyload + vue-infinite-scroll
++ Backend:  
+  - Node.js + Express + MongoDB(mongoose)
 
 ## Build Setup
 
@@ -11,10 +14,8 @@
 npm install
 
 # serve with hot reload at localhost:8080
-npm run dev
+npm start
 
-# build for production with minification
-npm run build
 ```
 
 ## Reference
