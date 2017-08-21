@@ -650,6 +650,11 @@ a:hover {
   letter-spacing: .1em;
 }
 
+.btn-dis {
+  background-color: #ccc;
+  border-color: #ccc;
+}
+
 .btn-line2 {
   white-space: normal;
   line-height: 1em;

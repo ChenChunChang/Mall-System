@@ -29,13 +29,13 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
         '/goods': { // dev mode proxy axios visit url
-            target: 'http://localhost:3000'
+            target: 'http://localhost:8000'
         },
         '/goods/*': { 
-            target: 'http://localhost:3000'
+            target: 'http://localhost:8000'
         },
         '/users/*': { 
-            target: 'http://localhost:3000'
+            target: 'http://localhost:8000'
         }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"

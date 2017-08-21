@@ -179,6 +179,99 @@ router.post('/editCheckAll', (req, res, next) => {
       }
     }
   })
+});
+
+router.get('/addressList', (req, res, next) => {
+  const userId = req.cookies.userId;
+
+  User.findOne({userId}, (err, doc) => {
+    if (err) {
+      res.json({
+        status: '1',
+        msg: err.message,
+        result: ''
+      })
+    } else {
+      res.json({
+        status: '0',
+        msg: '',
+        result: doc.addressList
+      })
+    }
+  })
+});
+
+router.post('/setDefault', (req, res, next) => {
+  const userId = req.cookies.userId;
+  const addressId = req.body.addressId;
+
+  if(!addressId) {
+    res.json({
+      status: '1003',
+      msg: 'addressId is null',
+      result: ''
+    })
+  } else {
+    User.findOne({userId}, (err, doc) => {
+      if (err) {
+        res.json({
+          status: '1',
+          msg: err.message,
+          result: ''
+        })
+      } else {
+        const addressList = doc.addressList;
+        addressList.forEach(item => {
+          if (item.addressId == addressId) {
+            item.isDefault = true;
+          } else {
+            item.isDefault = false;
+          } 
+        }); 
+
+        doc.save((err1, doc1) => {
+          if (err1) {
+            res.json({
+              status: '1',
+              msg: err.message,
+              result: ''
+            })
+          } else {
+            res.json({
+              status: '0',
+              msg: '',
+              result: ''
+            })
+          }
+        })     
+      }
+    })
+  }
+});
+
+router.post('/delAddress', (req, res, next) => {
+  var userId = req.cookies.userId;
+  var addressId = req.body.addressId;
+
+  User.update({userId}, {
+    $pull: {
+      'addressList': {
+        'addressId': addressId
+      }
+    }
+  }, (err, doc) => {
+    if (err) {
+      res.json({
+        status: '1',
+        msg: err.message
+      });
+    } else {
+      res.json({
+        status: '0',
+        msg: ''
+      });
+    }
+  })
 })
 
 
